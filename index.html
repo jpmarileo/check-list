@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Racha Sin Beber - Juan Pablo</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background: #1e3a2f; color: #fff; padding: 20px; }
+    .container { max-width: 400px; margin: 0 auto; background: #2e5c4a; padding: 30px; border-radius: 15px; }
+    h1 { color: #90EE90; }
+    .streak { font-size: 48px; font-weight: bold; color: #ffd700; }
+    button { 
+      padding: 15px 30px; margin: 10px; font-size: 18px; 
+      border: none; border-radius: 8px; cursor: pointer;
+    }
+    .check { background: #4CAF50; color: white; }
+    .reset { background: #f44336; color: white; }
+    .emoji { font-size: 60px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="emoji">🍺🚫</div>
+    <h1>Racha Sin Beber</h1>
+    <p id="status" style="font-size:20px;">Día <span id="days" class="streak">14</span>/30</p>
+    <button class="check" onclick="markDay()">✅ Marcar día sobrio</button>
+    <button class="reset" onclick="resetStreak()">Reiniciar conteo</button>
+    <p id="message" style="margin-top:20px; font-weight:bold;"></p>
+  </div>
+
+  <script>
+    let streak = localStorage.getItem('sobriedadStreak') ? parseInt(localStorage.getItem('sobriedadStreak')) : 14;
+    let goal = 30;
+
+    function updateUI() {
+      document.getElementById('days').textContent = streak;
+      if (streak >= goal) {
+        document.getElementById('message').innerHTML = '¡Felicidades weón! Completaste los 30 días 🔥';
+      } else {
+        document.getElementById('message').innerHTML = `Te faltan ${goal - streak} días. Tú puedes, Juan Pablo.`;
+      }
+    }
+
+    function markDay() {
+      if (streak < goal) {
+        streak++;
+        localStorage.setItem('sobriedadStreak', streak);
+        updateUI();
+      }
+    }
+
+    function resetStreak() {
+      if (confirm('¿Seguro que quieres reiniciar?')) {
+        streak = 0;
+        localStorage.setItem('sobriedadStreak', streak);
+        updateUI();
+      }
+    }
+
+    // Inicializar
+    updateUI();
+  </script>
+</body>
+</html>
